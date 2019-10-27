@@ -4,5 +4,5 @@ orpheus.cabal
 /*.elmi
 /frontend/elm.js
 /frontend/index.html
-/frontend/elm-stuff/0.19.0/Elm_Repl.elmi
-/frontend/elm-stuff/0.19.0/Elm_Repl.elmo
+/frontend/elm-stuff/*
+
