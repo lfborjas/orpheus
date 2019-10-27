@@ -20,6 +20,17 @@ description:         Please see the README on GitHub at <https://github.com/lfbo
 
 dependencies:
 - base >= 4.7 && < 5
+- warp
+- aeson
+- servant
+- servant-elm >= 0.6.0.2
+- elm-bridge >= 0.5.2
+- wai
+- servant-server
+- servant-client
+- servant-auth
+- servant-auth-server
+
 
 executables:
   server:
