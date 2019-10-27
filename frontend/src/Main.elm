@@ -77,8 +77,39 @@ view model =
         , exampleNavbar
         , section NotSpaced
             []
-            [ container [] [ editor model ] ]
+            [ container []
+                [ columns columnsModifiers
+                    []
+                    [ column (myColumnModifiers Auto (Just Width2)) [] []
+                    , column (myColumnModifiers Auto (Just Auto)) [] [ editor model ]
+                    ]
+                ]
+            ]
         ]
+
+
+
+-- from: https://github.com/surprisetalk/elm-bulma/blob/4b46323c581e03b8d80167102459d54782336817/src/Example.elm#L98
+
+
+myColumnModifiers : Width -> Maybe Width -> ColumnModifiers
+myColumnModifiers offset width =
+    let
+        widths : Devices (Maybe Width)
+        widths =
+            columnModifiers.widths
+    in
+    { columnModifiers
+        | offset =
+            offset
+        , widths =
+            { widths
+                | tablet = width
+                , desktop = width
+                , widescreen = width
+                , fullHD = width
+            }
+    }
 
 
 myBurger : Bool -> NavbarBurger Msg
