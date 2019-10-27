@@ -110,10 +110,17 @@ exampleNavbar =
 stats : Model -> Html Msg
 stats model =
     div []
-        [ span [] [ text ("Words: " ++ countWords model.content) ]
-        , span [] [ text ("Lines: " ++ countLines model.content) ]
-        , span [] [ text ("Stanzas: " ++ countStanzas model.content) ]
+        [ centeredLevel []
+            [ statsTag "Words" <| countWords model.content
+            , statsTag "Lines" <| countLines model.content
+            , statsTag "Stanzas" <| countStanzas model.content
+            ]
         ]
+
+
+statsTag : String -> String -> LevelItem Msg
+statsTag lbl txt =
+    easyLevelItemWithHeading [] lbl txt
 
 
 editor : Model -> Html Msg
