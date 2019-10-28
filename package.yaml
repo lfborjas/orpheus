@@ -30,6 +30,8 @@ dependencies:
 - servant-client
 - servant-auth
 - servant-auth-server
+- time
+- text
 
 
 executables:
