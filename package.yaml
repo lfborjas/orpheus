@@ -36,6 +36,8 @@ dependencies:
 - lens
 - lens-aeson
 - bytestring
+- mtl
+- scientific
 
 
 executables:
