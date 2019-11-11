@@ -1,0 +1,528 @@
+{
+    "paragraphs": [
+        {
+            "lines": [
+                {
+                    "annotatedWords": [
+                        {
+                            "confidence": 0.96,
+                            "text": "thering"
+                        },
+                        {
+                            "confidence": 0.93,
+                            "text": "there"
+                        },
+                        {
+                            "confidence": 0.94,
+                            "text": "I"
+                        },
+                        {
+                            "confidence": 0.5,
+                            "text": "got"
+                        },
+                        {
+                            "confidence": 0.86,
+                            "text": ","
+                        },
+                        {
+                            "confidence": 0.95,
+                            "text": "incredulas"
+                        },
+                        {
+                            "confidence": 0.95,
+                            "text": ","
+                        },
+                        {
+                            "confidence": 0.95,
+                            "text": "a"
+                        },
+                        {
+                            "confidence": 0.92,
+                            "text": "bit"
+                        },
+                        {
+                            "confidence": 0.91,
+                            "text": "buzzed"
+                        }
+                    ]
+                },
+                {
+                    "annotatedWords": [
+                        {
+                            "confidence": 0.91,
+                            "text": "some"
+                        },
+                        {
+                            "confidence": 0.74,
+                            "text": "gry"
+                        },
+                        {
+                            "confidence": 0.85,
+                            "text": "explan"
+                        },
+                        {
+                            "confidence": 0.95,
+                            "text": "to"
+                        },
+                        {
+                            "confidence": 0.91,
+                            "text": "rezegan"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "lines": [
+                {
+                    "annotatedWords": [
+                        {
+                            "confidence": 0.44,
+                            "text": "having"
+                        },
+                        {
+                            "confidence": 0.23,
+                            "text": "in"
+                        },
+                        {
+                            "confidence": 0.4,
+                            "text": "her"
+                        },
+                        {
+                            "confidence": 0.16,
+                            "text": "han"
+                        },
+                        {
+                            "confidence": 0.27,
+                            "text": "ating"
+                        },
+                        {
+                            "confidence": 0.3,
+                            "text": "the"
+                        },
+                        {
+                            "confidence": 0.46,
+                            "text": "south"
+                        },
+                        {
+                            "confidence": 0.11,
+                            "text": "other"
+                        },
+                        {
+                            "confidence": 0.08,
+                            "text": "to"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "lines": [
+                {
+                    "annotatedWords": [
+                        {
+                            "confidence": 0.94,
+                            "text": "\""
+                        },
+                        {
+                            "confidence": 0.85,
+                            "text": "thered"
+                        },
+                        {
+                            "confidence": 0.91,
+                            "text": "no"
+                        },
+                        {
+                            "confidence": 0.8,
+                            "text": "such"
+                        },
+                        {
+                            "confidence": 1,
+                            "text": "thing"
+                        },
+                        {
+                            "confidence": 0.97,
+                            "text": "as"
+                        },
+                        {
+                            "confidence": 0.96,
+                            "text": "Central"
+                        },
+                        {
+                            "confidence": 0.97,
+                            "text": "America"
+                        },
+                        {
+                            "confidence": 0.78,
+                            "text": "\""
+                        },
+                        {
+                            "confidence": 0.97,
+                            "text": "he"
+                        },
+                        {
+                            "confidence": 0.83,
+                            "text": "condescended"
+                        },
+                        {
+                            "confidence": 0.92,
+                            "text": "pointing"
+                        },
+                        {
+                            "confidence": 0.84,
+                            "text": "at"
+                        },
+                        {
+                            "confidence": 0.96,
+                            "text": "a"
+                        },
+                        {
+                            "confidence": 0.77,
+                            "text": "map"
+                        },
+                        {
+                            "confidence": 0.62,
+                            "text": ","
+                        },
+                        {
+                            "confidence": 0.98,
+                            "text": "("
+                        },
+                        {
+                            "confidence": 0.96,
+                            "text": "crow"
+                        },
+                        {
+                            "confidence": 0.8,
+                            "text": "."
+                        },
+                        {
+                            "confidence": 0.51,
+                            "text": "s"
+                        },
+                        {
+                            "confidence": 0.44,
+                            "text": ","
+                        },
+                        {
+                            "confidence": 0.88,
+                            "text": "the"
+                        },
+                        {
+                            "confidence": 0.9,
+                            "text": "difference"
+                        },
+                        {
+                            "confidence": 0.97,
+                            "text": "of"
+                        },
+                        {
+                            "confidence": 0.98,
+                            "text": "the"
+                        },
+                        {
+                            "confidence": 0.91,
+                            "text": "bc"
+                        },
+                        {
+                            "confidence": 0.8,
+                            "text": ")"
+                        },
+                        {
+                            "confidence": 0.94,
+                            "text": "theres"
+                        },
+                        {
+                            "confidence": 0.73,
+                            "text": "a"
+                        },
+                        {
+                            "confidence": 0.92,
+                            "text": "North"
+                        },
+                        {
+                            "confidence": 0.92,
+                            "text": "and"
+                        },
+                        {
+                            "confidence": 0.97,
+                            "text": "then"
+                        },
+                        {
+                            "confidence": 0.64,
+                            "text": "a"
+                        },
+                        {
+                            "confidence": 0.81,
+                            "text": "Jath"
+                        },
+                        {
+                            "confidence": 0.75,
+                            "text": ","
+                        },
+                        {
+                            "confidence": 0.78,
+                            "text": "Anerish"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "lines": [
+                {
+                    "annotatedWords": [
+                        {
+                            "confidence": 0.99,
+                            "text": "I"
+                        },
+                        {
+                            "confidence": 0.74,
+                            "text": "scenesed"
+                        },
+                        {
+                            "confidence": 0.9,
+                            "text": ","
+                        },
+                        {
+                            "confidence": 0.88,
+                            "text": "couldn"
+                        },
+                        {
+                            "confidence": 0.96,
+                            "text": "'"
+                        },
+                        {
+                            "confidence": 0.92,
+                            "text": "t"
+                        },
+                        {
+                            "confidence": 0.98,
+                            "text": "care"
+                        },
+                        {
+                            "confidence": 0.98,
+                            "text": "to"
+                        },
+                        {
+                            "confidence": 0.92,
+                            "text": "contend"
+                        },
+                        {
+                            "confidence": 0.95,
+                            "text": "("
+                        },
+                        {
+                            "confidence": 0.95,
+                            "text": "it"
+                        },
+                        {
+                            "confidence": 0.91,
+                            "text": "was"
+                        },
+                        {
+                            "confidence": 0.98,
+                            "text": "definitel"
+                        },
+                        {
+                            "confidence": 0.97,
+                            "text": ","
+                        },
+                        {
+                            "confidence": 0.98,
+                            "text": "not"
+                        },
+                        {
+                            "confidence": 0.99,
+                            "text": "a"
+                        },
+                        {
+                            "confidence": 0.9,
+                            "text": "continent"
+                        },
+                        {
+                            "confidence": 0.53,
+                            "text": ")"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "lines": [
+                {
+                    "annotatedWords": [
+                        {
+                            "confidence": 0.96,
+                            "text": "I"
+                        },
+                        {
+                            "confidence": 0.92,
+                            "text": "dicht"
+                        },
+                        {
+                            "confidence": 0.97,
+                            "text": "here"
+                        },
+                        {
+                            "confidence": 0.91,
+                            "text": "a"
+                        },
+                        {
+                            "confidence": 0.92,
+                            "text": "soli"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "lines": [
+                {
+                    "annotatedWords": [
+                        {
+                            "confidence": 0.85,
+                            "text": "arghat"
+                        },
+                        {
+                            "confidence": 0.79,
+                            "text": "thert"
+                        },
+                        {
+                            "confidence": 0.86,
+                            "text": ")"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "lines": [
+                {
+                    "annotatedWords": [
+                        {
+                            "confidence": 0.83,
+                            "text": "Toron"
+                        },
+                        {
+                            "confidence": 0.71,
+                            "text": "'"
+                        },
+                        {
+                            "confidence": 0.97,
+                            "text": "t"
+                        },
+                        {
+                            "confidence": 0.84,
+                            "text": "have"
+                        },
+                        {
+                            "confidence": 0.88,
+                            "text": "then"
+                        },
+                        {
+                            "confidence": 0.96,
+                            "text": "the"
+                        },
+                        {
+                            "confidence": 0.93,
+                            "text": "presence"
+                        },
+                        {
+                            "confidence": 0.99,
+                            "text": "of"
+                        },
+                        {
+                            "confidence": 0.68,
+                            "text": "mine"
+                        },
+                        {
+                            "confidence": 0.99,
+                            "text": "to"
+                        },
+                        {
+                            "confidence": 0.95,
+                            "text": "look"
+                        },
+                        {
+                            "confidence": 0.92,
+                            "text": "myself"
+                        },
+                        {
+                            "confidence": 0.98,
+                            "text": "and"
+                        },
+                        {
+                            "confidence": 0.99,
+                            "text": "see"
+                        },
+                        {
+                            "confidence": 0.97,
+                            "text": "what"
+                        },
+                        {
+                            "confidence": 0.99,
+                            "text": "I"
+                        },
+                        {
+                            "confidence": 0.86,
+                            "text": "could"
+                        },
+                        {
+                            "confidence": 0.83,
+                            "text": "thin"
+                        },
+                        {
+                            "confidence": 0.82,
+                            "text": "the"
+                        },
+                        {
+                            "confidence": 0.99,
+                            "text": "to"
+                        },
+                        {
+                            "confidence": 0.99,
+                            "text": "teach"
+                        },
+                        {
+                            "confidence": 0.85,
+                            "text": "or"
+                        },
+                        {
+                            "confidence": 0.85,
+                            "text": "elisies"
+                        },
+                        {
+                            "confidence": 0.9,
+                            "text": ","
+                        },
+                        {
+                            "confidence": 0.82,
+                            "text": "that"
+                        },
+                        {
+                            "confidence": 0.41,
+                            "text": "'"
+                        },
+                        {
+                            "confidence": 0.88,
+                            "text": "s"
+                        },
+                        {
+                            "confidence": 0.92,
+                            "text": "what"
+                        },
+                        {
+                            "confidence": 0.96,
+                            "text": "they"
+                        },
+                        {
+                            "confidence": 0.87,
+                            "text": "for"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

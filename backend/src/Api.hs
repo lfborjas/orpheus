@@ -63,7 +63,7 @@ instance FromJSON PoemInfo
 instance ToJSON PoemInfo
 
 data PoemAnalysis = PoemAnalysis
-  { results :: [Vision.AnnotatedBlock] }
+  { paragraphs :: [Vision.AnnotatedBlock] }
   deriving (Show, Generic)
 
 instance FromJSON PoemAnalysis
