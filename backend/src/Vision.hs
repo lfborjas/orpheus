@@ -243,11 +243,33 @@ makeFieldsNoPrefix ''VisionAPIPayload
 deriveJSON defaultOptions{fieldLabelModifier = drop 1} ''VisionAPIPayload
 
 
--- | API INTERACTION FUNCTIONS
+-- | API INTERACTION FUNCTIONS AND TYPES
 
 
 -- this is what `Wreq.asJSON =<< Wreq.postWith ...` returns
 type AnnotateResponse = Wreq.Response (VisionAPIPayload)
+
+data AnnotatedWord = AnnotatedWord
+  { _text :: Text
+  , _confidence :: Scientific
+  } deriving (Show, Generic)
+
+deriveJSON defaultOptions{fieldLabelModifier = drop 1} ''AnnotatedWord
+
+data AnnotatedLine = AnnotatedLine
+  {
+    _annotatedWords :: [AnnotatedWord]
+  } deriving (Show, Generic)
+
+deriveJSON defaultOptions{fieldLabelModifier = drop 1} ''AnnotatedLine
+
+data AnnotatedBlock = AnnotatedBlock
+  {
+    _lines :: [AnnotatedLine]
+  } deriving (Show, Generic)
+
+deriveJSON defaultOptions{fieldLabelModifier = drop 1} ''AnnotatedBlock
+
 
 annotateRemoteImage :: ImageURI -> IO AnnotateResponse
 annotateRemoteImage uri = do
@@ -284,35 +306,38 @@ allWords :: Paragraph -> [TextWord]
 allWords p =
   p ^.. Vision.words . traverse
 
-type ConfidenceData = (Text, Scientific)
 
-confidenceData :: TextWord -> ConfidenceData
-confidenceData w =
+annotateWord :: TextWord -> AnnotatedWord
+annotateWord w =
   let w' = mconcat $ w ^.. symbols . traverse . text
       c  = w ^. confidence . non 0
-  in (w', c)
-
-data AnnotatedLine = AnnotatedLine
-  {
-    annotatedWords :: [ConfidenceData]
-  } deriving (Show)
-
-data AnnotatedBlock = AnnotatedBlock
-  {
-    lines :: [AnnotatedLine]
-  } deriving (Show)
+  in AnnotatedWord w' c
 
 annotatedLines :: Block -> [AnnotatedLine]
 annotatedLines p =
-  [ AnnotatedLine $ map confidenceData $ allWords l | l <- allLines p ]
+  [ AnnotatedLine $ map annotateWord $ allWords l | l <- allLines p ]
 
 annotatedBlocks :: VisionAPIPayload -> [AnnotatedBlock]
 annotatedBlocks payload =
   [ AnnotatedBlock $  annotatedLines p | p <- allBlocks payload ]
 
--- analyze :: ImageURI -> [ConfidenceData]
--- analyze uri = do
---  r <- annotateRemoteImage uri
---  let d = confidenceData 
+analyze :: ImageURI -> IO [AnnotatedBlock]
+analyze uri = do
+  r <- annotateRemoteImage uri
+  return $ annotatedBlocks $ r ^. Wreq.responseBody
       
 
+{-
+
+λ> a <- analyze "gs://orpheus-ocr-artifacts/IMG_5013.jpg"
+λ> take 1 a
+[AnnotatedBlock {lines = [AnnotatedLine {annotatedWords = [("thering",0.96),("there",0.93),("I",0.94),("got",0.5),(",",0.86),("incredulas",0.95),(",",0.95),("a",0.95),("bit",0.92),("buzzed",0.91)]},AnnotatedLine {annotatedWords = [("some",0.91),("gry",0.74),("explan",0.85),("to",0.95),("rezegan",0.91)]}]}]
+
+
+--parseConfigFile :: String ->
+
+λ> a <- analyze "gs://orpheus-ocr-artifacts/IMG_5013.jpg"
+λ> take 1 a
+[AnnotatedBlock {lines = [AnnotatedLine {annotatedWords = [AnnotatedWord {_text = "thering", _confidence = 0.96},AnnotatedWord {_text = "there", _confidence = 0.93},AnnotatedWord {_text = "I", _confidence = 0.94},AnnotatedWord {_text = "got", _confidence = 0.5},AnnotatedWord {_text = ",", _confidence = 0.86},AnnotatedWord {_text = "incredulas", _confidence = 0.95},AnnotatedWord {_text = ",", _confidence = 0.95},AnnotatedWord {_text = "a", _confidence = 0.95},AnnotatedWord {_text = "bit", _confidence = 0.92},AnnotatedWord {_text = "buzzed", _confidence = 0.91}]},AnnotatedLine {annotatedWords = [AnnotatedWord {_text = "some", _confidence = 0.91},AnnotatedWord {_text = "gry", _confidence = 0.74},AnnotatedWord {_text = "explan", _confidence = 0.85},AnnotatedWord {_text = "to", _confidence = 0.95},AnnotatedWord {_text = "rezegan", _confidence = 0.91}]}]}]
+
+-}
