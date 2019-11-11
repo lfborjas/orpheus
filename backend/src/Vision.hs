@@ -267,15 +267,18 @@ fullText :: VisionAPIPayload -> Text
 fullText payload =
   head $ payload ^.. responses . traverse . fullTextAnnotation . text
 
--- | Get all paragraphs found across all pages and blocks.
-allParagraphs :: VisionAPIPayload -> [Paragraph]
-allParagraphs payload =
+-- | Get all paragraphs found across all pages (google calls them "blocks")
+allBlocks :: VisionAPIPayload -> [Block]
+allBlocks payload =
    payload
    ^.. responses . traverse
    . fullTextAnnotation
    . pages . traverse
    . blocks . traverse
-   . paragraphs . traverse
+
+allLines :: Block -> [Paragraph]
+allLines block =
+   block ^.. paragraphs . traverse
 
 allWords :: Paragraph -> [TextWord]
 allWords p =
@@ -289,14 +292,23 @@ confidenceData w =
       c  = w ^. confidence . non 0
   in (w', c)
 
-data AnnotatedParagraph = AnnotatedParagraph
+data AnnotatedLine = AnnotatedLine
   {
     annotatedWords :: [ConfidenceData]
   } deriving (Show)
 
-annotatedParagraphs :: VisionAPIPayload -> [AnnotatedParagraph]
-annotatedParagraphs payload =
-  [ AnnotatedParagraph $ map confidenceData $ allWords p | p <- allParagraphs payload ]
+data AnnotatedBlock = AnnotatedBlock
+  {
+    lines :: [AnnotatedLine]
+  } deriving (Show)
+
+annotatedLines :: Block -> [AnnotatedLine]
+annotatedLines p =
+  [ AnnotatedLine $ map confidenceData $ allWords l | l <- allLines p ]
+
+annotatedBlocks :: VisionAPIPayload -> [AnnotatedBlock]
+annotatedBlocks payload =
+  [ AnnotatedBlock $  annotatedLines p | p <- allBlocks payload ]
 
 -- analyze :: ImageURI -> [ConfidenceData]
 -- analyze uri = do
