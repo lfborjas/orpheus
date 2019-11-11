@@ -1,18 +1,18 @@
-{-# LANGUAGE DataKinds #-}
-{-# LANGUAGE TypeOperators #-}
-{-# LANGUAGE DeriveGeneric #-}
-{-# LANGUAGE DerivingStrategies #-}
+{-# LANGUAGE DataKinds                  #-}
+{-# LANGUAGE DeriveGeneric              #-}
+{-# LANGUAGE DerivingStrategies         #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
+{-# LANGUAGE TypeOperators              #-}
 
 
 module Api where
 
-import GHC.Generics
-import Data.Text
-import Data.Time (UTCTime)
-import Servant.API
-import Data.Aeson
-import qualified Vision as Vision
+import           Data.Aeson
+import           Data.Text
+import           Data.Time    (UTCTime)
+import           GHC.Generics
+import           Servant.API
+import qualified Vision       as Vision
 
 {- Based on both:
    https://github.com/haskell-servant/example-servant-elm/blob/50924b7acef84c29210a53fceaf6978e6048370f/server/src/Api.hs
@@ -46,9 +46,9 @@ newtype CollectionName = MkCollectionName String
   deriving newtype (ToJSON)
 
 data Poem = Poem
-  { title :: String
-  , body  :: String -- TODO: Text?
-  , tags :: [Tag]
+  { title       :: String
+  , body        :: String -- TODO: Text?
+  , tags        :: [Tag]
   , collections :: [CollectionName]
   }
   deriving (Show, Eq, Generic)

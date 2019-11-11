@@ -2,14 +2,14 @@
 
 module Server where
 
-import Servant
-import Network.Wai
-import Network.Wai.Handler.Warp
-import Data.Time.Clock
-import Control.Monad.Trans (liftIO)
-import qualified Vision as Vision
+import           Control.Monad.Trans      (liftIO)
+import           Data.Time.Clock
+import           Network.Wai
+import           Network.Wai.Handler.Warp
+import           Servant
+import qualified Vision                   as Vision
 
-import Api
+import           Api
 
 examplePoems :: [Poem]
 examplePoems =
@@ -40,11 +40,11 @@ apiServer = taggedPoems
   :<|> poemsInCollection
   :<|> allPoems
   :<|> analyzePoem
-  
+
 
 api :: Proxy Api
 api = Proxy
 
 app :: Application
 app = serve api apiServer
-  
+

@@ -1,7 +1,7 @@
 module Main where
 
-import Network.Wai.Handler.Warp
-import Server
+import           Network.Wai.Handler.Warp
+import           Server
 
 main :: IO ()
 main = do

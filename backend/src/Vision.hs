@@ -1,28 +1,27 @@
-{-# LANGUAGE FlexibleInstances #-}      -- also needed for lenses??
-{-# LANGUAGE DeriveGeneric #-}
-{-# LANGUAGE OverloadedStrings #-}
-{-# LANGUAGE TemplateHaskell #-}
-{-# LANGUAGE DuplicateRecordFields  #-} -- to not have to come up with a unique name for each field
-{-# LANGUAGE MultiParamTypeClasses  #-} -- needed for makeFieldsNoPrefix
-{-# LANGUAGE FunctionalDependencies #-} -- also needed for makeFieldsnoprefix
-
-
-
+{-# LANGUAGE DeriveGeneric          #-}
+{-# LANGUAGE DuplicateRecordFields  #-}
+{-# LANGUAGE FlexibleInstances      #-}
+{-# LANGUAGE FunctionalDependencies #-}
+{-# LANGUAGE MultiParamTypeClasses  #-}
+{-# LANGUAGE OverloadedStrings      #-}
+{-# LANGUAGE TemplateHaskell        #-}
 
 module Vision where
 
-import GHC.Generics
-import Control.Lens ((&), (.~), (<&>), (?~), (^.), (^..), makeLenses, makeFieldsNoPrefix, traverse)
-import Control.Lens.Iso (non)
-import Data.Aeson
-import Data.Aeson.TH
-import Data.Aeson.Types
-import Data.Text (Text)
-import System.IO
-import Data.Scientific as Scientific
-import qualified Data.Aeson.Lens as AesonLens
-import qualified Network.Wreq as Wreq
+import           Control.Lens               (makeFieldsNoPrefix, makeLenses,
+                                             traverse, (&), (.~), (<&>), (?~),
+                                             (^.), (^..))
+import           Control.Lens.Iso           (non)
+import           Data.Aeson
+import qualified Data.Aeson.Lens            as AesonLens
+import           Data.Aeson.TH
+import           Data.Aeson.Types
 import qualified Data.ByteString.Lazy.Char8 as LC
+import           Data.Scientific            as Scientific
+import           Data.Text                  (Text)
+import           GHC.Generics
+import qualified Network.Wreq               as Wreq
+import           System.IO
 
 
 -- | REQUEST TYPES
@@ -56,8 +55,8 @@ instance ToJSON VisionRequest where
 
 data CustomProperty = CustomProperty
   {
-    _name :: Text
-  , _value :: Text
+    _name        :: Text
+  , _value       :: Text
   , _uint64Value :: Text
   } deriving (Show)
 
@@ -67,16 +66,16 @@ deriveJSON defaultOptions{fieldLabelModifier = drop 1} ''CustomProperty
 -- https://cloud.google.com/vision/docs/reference/rest/v1/AnnotateImageResponse#EntityAnnotation
 data EntityAnnotation = EntityAnnotation
   {
-    _mid :: Maybe Text -- opaque entity id
-  , _locale :: Maybe Text
+    _mid         :: Maybe Text -- opaque entity id
+  , _locale      :: Maybe Text
   , _description :: Text
-  , _score :: Maybe Scientific
+  , _score       :: Maybe Scientific
   -- , _confidence :: Scientific -- deprecated, use score instead
-  , _topicality :: Maybe Scientific
+  , _topicality  :: Maybe Scientific
   -- ignoring these fields for now:
   -- , _boundingPoly :: BoundingPoly
   -- , _locations :: [LocationInfo]
-  , _properties :: Maybe [CustomProperty]
+  , _properties  :: Maybe [CustomProperty]
   } deriving (Show)
 
 makeFieldsNoPrefix ''EntityAnnotation
@@ -103,13 +102,13 @@ data BreakType = Unknown
 
 -- https://stackoverflow.com/questions/27076491/aeson-parse-enumerated-data-types
 createBreakType :: Text -> BreakType
-createBreakType "UNKNOWN" = Unknown
-createBreakType "SPACE"   = Space
-createBreakType "SURE_SPACE" = SureSpace
+createBreakType "UNKNOWN"        = Unknown
+createBreakType "SPACE"          = Space
+createBreakType "SURE_SPACE"     = SureSpace
 createBreakType "EOL_SURE_SPACE" = EOLSureSpace
-createBreakType "HYPHEN" = Hyphen
-createBreakType "LINE_BREAK" = LineBreak
-createBreakType _            = Unknown
+createBreakType "HYPHEN"         = Hyphen
+createBreakType "LINE_BREAK"     = LineBreak
+createBreakType _                = Unknown
 
 instance FromJSON BreakType
 instance ToJSON   BreakType
@@ -117,7 +116,7 @@ instance ToJSON   BreakType
 data DetectedBreak = DetectedBreak
   {
     _breakType :: BreakType
-  , _isPrefix :: Maybe Bool
+  , _isPrefix  :: Maybe Bool
   } deriving (Show, Generic)
 
 makeFieldsNoPrefix ''DetectedBreak
@@ -144,9 +143,9 @@ deriveJSON defaultOptions{fieldLabelModifier = drop 1} ''TextProperty
 
 data Symbol = Symbol
   {
-    _property :: Maybe TextProperty
+    _property   :: Maybe TextProperty
     -- _boundingBox :: BoundingPoly
-  , _text :: Text
+  , _text       :: Text
   , _confidence :: Maybe Scientific
   } deriving (Show)
 
@@ -155,9 +154,9 @@ deriveJSON defaultOptions{fieldLabelModifier = drop 1} ''Symbol
 
 data TextWord = TextWord
   {
-    _property :: Maybe TextProperty
+    _property   :: Maybe TextProperty
   -- , _boundingBox :: BoundingPoly
-  , _symbols :: [Symbol]
+  , _symbols    :: [Symbol]
   , _confidence :: Maybe Scientific
   } deriving (Show)
 
@@ -166,9 +165,9 @@ deriveJSON defaultOptions{fieldLabelModifier = drop 1} ''TextWord
 
 data Paragraph = Paragraph
   {
-    _property :: Maybe TextProperty
+    _property   :: Maybe TextProperty
   -- , _boundingBox :: BoundingPoly
-  , _words :: [TextWord]
+  , _words      :: [TextWord]
   , _confidence :: Maybe Scientific
   } deriving (Show)
 
@@ -177,10 +176,10 @@ deriveJSON defaultOptions{fieldLabelModifier = drop 1} ''Paragraph
 
 data Block = Block
   {
-    _property :: Maybe TextProperty
+    _property   :: Maybe TextProperty
   -- , _boundingBox :: BoundingPoly
   , _paragraphs :: [Paragraph]
-  , _blockType :: Text -- BlockType
+  , _blockType  :: Text -- BlockType
   , _confidence :: Maybe Scientific
   } deriving (Show)
 
@@ -196,10 +195,10 @@ deriveJSON defaultOptions{fieldLabelModifier = drop 1} ''Block
 
 data Page = Page
   {
-    _property :: TextProperty
-  , _width    :: Scientific
-  , _height   :: Scientific
-  , _blocks   :: [Block]
+    _property   :: TextProperty
+  , _width      :: Scientific
+  , _height     :: Scientific
+  , _blocks     :: [Block]
   , _confidence :: Maybe Scientific
   } deriving (Show)
 
@@ -250,7 +249,7 @@ deriveJSON defaultOptions{fieldLabelModifier = drop 1} ''VisionAPIPayload
 type AnnotateResponse = Wreq.Response (VisionAPIPayload)
 
 data AnnotatedWord = AnnotatedWord
-  { _text :: Text
+  { _text       :: Text
   , _confidence :: Scientific
   } deriving (Show, Generic)
 
@@ -325,7 +324,7 @@ analyze :: ImageURI -> IO [AnnotatedBlock]
 analyze uri = do
   r <- annotateRemoteImage uri
   return $ annotatedBlocks $ r ^. Wreq.responseBody
-      
+
 
 {-
 
