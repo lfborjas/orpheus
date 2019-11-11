@@ -2,12 +2,14 @@
 
 module Server where
 
-import Servant
-import Network.Wai
-import Network.Wai.Handler.Warp
-import Data.Time.Clock
+import           Control.Monad.Trans      (liftIO)
+import           Data.Time.Clock
+import           Network.Wai
+import           Network.Wai.Handler.Warp
+import           Servant
+import qualified Vision                   as Vision
 
-import Api
+import           Api
 
 examplePoems :: [Poem]
 examplePoems =
@@ -18,6 +20,11 @@ examplePoems =
 -- handlers
 -- we could make these be functions of DB, e.g.
 -- https://github.com/haskell-servant/example-servant-elm/blob/50924b7acef84c29210a53fceaf6978e6048370f/server/src/App.hs
+
+analyzePoem :: PoemInfo -> Handler PoemAnalysis
+analyzePoem info = do
+  results <- liftIO $ Vision.analyze $ gsURI info
+  return $ PoemAnalysis results
 
 allPoems :: Handler [Poem]
 allPoems = return examplePoems
@@ -32,11 +39,12 @@ apiServer :: Server Api
 apiServer = taggedPoems
   :<|> poemsInCollection
   :<|> allPoems
-  
+  :<|> analyzePoem
+
 
 api :: Proxy Api
 api = Proxy
 
 app :: Application
 app = serve api apiServer
-  
+

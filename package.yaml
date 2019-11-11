@@ -32,6 +32,12 @@ dependencies:
 - servant-auth-server
 - time
 - text
+- wreq
+- lens
+- lens-aeson
+- bytestring
+- mtl
+- scientific
 
 
 executables:
