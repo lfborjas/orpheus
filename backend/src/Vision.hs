@@ -12,11 +12,12 @@
 module Vision where
 
 import GHC.Generics
-import Control.Lens ((&), (.~), (<&>), (?~), (^.), makeLenses, makeFieldsNoPrefix)
+import Control.Lens ((&), (.~), (<&>), (?~), (^.), (^..), makeLenses, makeFieldsNoPrefix, traverse)
+import Control.Lens.Iso (non)
 import Data.Aeson
 import Data.Aeson.TH
 import Data.Aeson.Types
-import Data.Text hiding (drop)
+import Data.Text (Text)
 import System.IO
 import Data.Scientific as Scientific
 import qualified Data.Aeson.Lens as AesonLens
@@ -245,10 +246,11 @@ deriveJSON defaultOptions{fieldLabelModifier = drop 1} ''VisionAPIPayload
 -- | API INTERACTION FUNCTIONS
 
 
+-- this is what `Wreq.asJSON =<< Wreq.postWith ...` returns
 type AnnotateResponse = Wreq.Response (VisionAPIPayload)
 
-annotateResponse :: ImageURI -> IO AnnotateResponse
-annotateResponse uri = do
+annotateRemoteImage :: ImageURI -> IO AnnotateResponse
+annotateRemoteImage uri = do
   let opts = Wreq.defaults
         & Wreq.header "X-Goog-Api-Key" .~ [""]
         & Wreq.header "Content-Type"   .~ ["application/json; charset=utf-8"]
@@ -258,14 +260,47 @@ annotateResponse uri = do
        $ toJSON
        $ VisionRequest uri
 
-  -- to get it out: :t r ^. Wreq.responseBody :: VisionAPIPayload
   Wreq.asJSON r
 
-getPayload :: IO AnnotateResponse -> VisionAPIPayload
-getPayload r = r ^. Wreq.responseBody
-
+-- | gets the full text of a given payload, for easier QA.
 fullText :: VisionAPIPayload -> Text
 fullText payload =
   head $ payload ^.. responses . traverse . fullTextAnnotation . text
 
+-- | Get all paragraphs found across all pages and blocks.
+allParagraphs :: VisionAPIPayload -> [Paragraph]
+allParagraphs payload =
+   payload
+   ^.. responses . traverse
+   . fullTextAnnotation
+   . pages . traverse
+   . blocks . traverse
+   . paragraphs . traverse
+
+allWords :: Paragraph -> [TextWord]
+allWords p =
+  p ^.. Vision.words . traverse
+
+type ConfidenceData = (Text, Scientific)
+
+confidenceData :: TextWord -> ConfidenceData
+confidenceData w =
+  let w' = mconcat $ w ^.. symbols . traverse . text
+      c  = w ^. confidence . non 0
+  in (w', c)
+
+data AnnotatedParagraph = AnnotatedParagraph
+  {
+    annotatedWords :: [ConfidenceData]
+  } deriving (Show)
+
+annotatedParagraphs :: VisionAPIPayload -> [AnnotatedParagraph]
+annotatedParagraphs payload =
+  [ AnnotatedParagraph $ map confidenceData $ allWords p | p <- allParagraphs payload ]
+
+-- analyze :: ImageURI -> [ConfidenceData]
+-- analyze uri = do
+--  r <- annotateRemoteImage uri
+--  let d = confidenceData 
+      
 
